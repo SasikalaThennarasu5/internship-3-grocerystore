@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import ShippingAddressSerializer, OrderSerializer
@@ -33,6 +33,10 @@ class CreateOrderView(APIView):
             )
         except (ShippingAddress.DoesNotExist, ValueError):
             return Response({"error": "Invalid address"}, status=404)
+        
+        # Check if cart is empty
+        if not cart.items.exists():
+            return Response({"error": "Cart is empty"}, status=400)
 
         # Calculate total
         total_price = 0
@@ -60,9 +64,12 @@ class CreateOrderView(APIView):
         cart.items.all().delete()
 
         return Response({
-            "message": "Order created successfully",
-            "order_id": order.id
-        })
+    "message": "Order created successfully",
+    "order_id": order.id,
+    "total_price": order.total_price,
+    "payment_method": order.payment_method,
+    "status": order.status
+})
     
 class CreateShippingAddressView(APIView):
 
@@ -93,3 +100,46 @@ class OrderDetailView(RetrieveAPIView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
+    
+class TrackOrderView(APIView):
+
+    def post(self, request):
+
+        order_id = request.data.get("order_id")
+        email = request.data.get("email")
+
+        try:
+            order = Order.objects.get(
+                id=order_id,
+                shipping_address__email=email
+            )
+
+            serializer = OrderSerializer(order)
+
+            return Response(serializer.data)
+
+        except Order.DoesNotExist:
+            return Response({"error": "Order not found"}, status=404)
+        
+class AddressListView(ListAPIView):
+
+    serializer_class = ShippingAddressSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return ShippingAddress.objects.filter(user=self.request.user)
+    
+class UpdateAddressView(UpdateAPIView):
+
+    serializer_class = ShippingAddressSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return ShippingAddress.objects.filter(user=self.request.user)
+    
+class DeleteAddressView(DestroyAPIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return ShippingAddress.objects.filter(user=self.request.user)

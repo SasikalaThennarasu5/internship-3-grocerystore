@@ -35,11 +35,13 @@ class AddToCartView(generics.CreateAPIView):
 
         cart_item, created = CartItem.objects.get_or_create(
             cart=cart,
-            product=product
-        )
+            product=product,
+            defaults={"quantity": quantity}
+)
 
-        cart_item.quantity += int(quantity)
-        cart_item.save()
+        if not created:
+           cart_item.quantity += int(quantity)
+           cart_item.save()
 
         return Response({"message": "Product added to cart"})
     
@@ -78,3 +80,56 @@ class RemoveCartItemView(APIView):
         except CartItem.DoesNotExist:
             return Response({"error": "Cart item not found"}, status=404)
     
+class CartSummaryView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+
+        try:
+            cart = Cart.objects.get(user=request.user)
+        except Cart.DoesNotExist:
+            return Response({
+                "items": [],
+                "summary": {
+                    "subtotal": 0,
+                    "shipping": 0,
+                    "tax": 0,
+                    "discount": 0,
+                    "total": 0
+                }
+            })
+
+        cart_items = cart.items.all()
+
+        items = []
+        subtotal = 0
+
+        for item in cart_items:
+            item_total = item.product.price * item.quantity
+            subtotal += item_total
+
+            items.append({
+                "product_id": item.product.id,
+                "product_name": item.product.name,
+                "price": item.product.price,
+                "quantity": item.quantity,
+                "total": item_total
+            })
+
+        shipping = 0
+        tax = 0
+        discount = 0
+
+        total = subtotal + shipping + tax - discount
+
+        return Response({
+            "items": items,
+            "summary": {
+                "subtotal": subtotal,
+                "shipping": shipping,
+                "tax": tax,
+                "discount": discount,
+                "total": total
+            }
+        })
