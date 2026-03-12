@@ -1,54 +1,56 @@
 import { useEffect, useState } from "react";
-import { getCategories } from "../services/categoryService";
+import { getCategories } from "../services/api";
+import CategoryCard from "../components/CategoryCard";
 
-function CategoriesSection() {
+const CategoriesSection = () => {
 
-  const [categories, setCategories] = useState([]);
+const [categories,setCategories] = useState([]);
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+useEffect(()=>{
+fetchCategories();
+},[]);
 
-  const fetchCategories = async () => {
-    const data = await getCategories();
-    console.log(data);
-    setCategories(data);
-  };
+const fetchCategories = async()=>{
 
-  return (
-    <section className="py-16 text-center">
+try{
 
-      <p className="text-green-700 font-semibold text-lg">Categories</p>
-      <h2 className="text-4xl font-bold mb-12">
-        Featured <span className="text-green-700">Categories</span>
-      </h2>
+const data = await getCategories();
+setCategories(data);
 
-      <div className="flex justify-center gap-10 flex-wrap">
-
-        {categories.map((cat) => (
-          <div key={cat.id} className="flex flex-col items-center w-32">
-
-            <div className="bg-green-200 w-28 h-28 rounded-full flex items-center justify-center">
-              <img
-                src={cat.image}
-                alt={cat.name}
-                className="w-16 h-16 object-contain"
-              />
-            </div>
-
-            <h3 className="font-semibold mt-2">{cat.name}</h3>
-
-            <p className="text-green-600 text-sm">
-              {cat.product_count} products
-            </p>
-
-          </div>
-        ))}
-
-      </div>
-
-    </section>
-  );
+}catch(error){
+console.error("Category fetch error:",error);
 }
+
+};
+
+return(
+
+<section className="py-12 bg-gray-100">
+
+<div className="container mx-auto">
+
+<h4 className="text-green-600 text-center font-semibold">
+Categories
+</h4>
+
+<h2 className="text-3xl font-bold text-center mb-10">
+Featured <span className="text-green-600">Categories</span>
+</h2>
+
+<div className="flex gap-8 overflow-x-auto">
+
+{categories.map((cat)=>(
+<CategoryCard key={cat.id} category={cat}/>
+))}
+
+</div>
+
+</div>
+
+</section>
+
+);
+
+};
 
 export default CategoriesSection;

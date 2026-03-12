@@ -1,6 +1,9 @@
-import api from "./api";
+import axios from "axios";
 
 export const getCategories = async () => {
-  const response = await api.get("products/categories/");
-  return response.data;
+
+  const res = await axios.get("/api/categories/");
+
+  return res.data.results || [];
+
 };

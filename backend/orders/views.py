@@ -71,8 +71,9 @@ class CreateOrderView(APIView):
     "status": order.status
 })
     
-class CreateShippingAddressView(APIView):
 
+
+class CreateShippingAddressView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -80,10 +81,10 @@ class CreateShippingAddressView(APIView):
         serializer = ShippingAddressSerializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            serializer.save(user=request.user)   # 🔥 attach logged in user
             return Response(serializer.data)
 
-        return Response(serializer.errors)
+        return Response(serializer.errors, status=400)
     
 class OrderListView(ListAPIView):
 

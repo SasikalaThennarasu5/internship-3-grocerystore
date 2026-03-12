@@ -1,29 +1,126 @@
-function FilterSidebar() {
-  return (
-    <div className="w-64 border-r pr-6">
+function FilterSidebar({ filters, setFilters, categories = [], brands = [] }) {
 
-      <h3 className="font-bold mb-3">Category</h3>
+return (
 
-      <div className="space-y-2 text-sm">
-        <label className="block"><input type="checkbox"/> Vegetables</label>
-        <label className="block"><input type="checkbox"/> Fruits</label>
-        <label className="block"><input type="checkbox"/> Bakery</label>
-        <label className="block"><input type="checkbox"/> Milk & Eggs</label>
-      </div>
+<div className="bg-white p-4 rounded shadow">
 
-      <h3 className="font-bold mt-6 mb-3">Price</h3>
+<h3 className="font-semibold mb-4">
+Filter Options
+</h3>
 
-      <div className="space-y-2 text-sm">
-        <label><input type="checkbox"/> ₹199 - ₹599</label>
-        <label><input type="checkbox"/> ₹699 - ₹899</label>
-      </div>
+{/* CATEGORY */}
 
-      <button className="bg-green-700 text-white w-full mt-6 py-2 rounded">
-        Submit
-      </button>
+<div className="mb-6">
 
-    </div>
-  );
+<p className="font-semibold mb-2">
+Category
+</p>
+
+{categories?.map(cat => (
+
+<label
+key={cat.id}
+className="block text-sm"
+>
+
+<input
+type="checkbox"
+value={cat.id}
+onChange={(e)=>{
+
+setFilters({
+...filters,
+category:Number(e.target.value)
+})
+
+}}
+/>
+
+<span className="ml-2">
+{cat.name}
+</span>
+
+</label>
+
+))}
+
+</div>
+
+{/* PRICE */}
+
+<div className="mb-6">
+
+<p className="font-semibold mb-2">
+Price
+</p>
+
+<input
+type="number"
+placeholder="Min"
+className="border p-1 w-full mb-2"
+onChange={(e)=>setFilters({...filters,price_min:e.target.value})}
+/>
+
+<input
+type="number"
+placeholder="Max"
+className="border p-1 w-full"
+onChange={(e)=>setFilters({...filters,price_max:e.target.value})}
+/>
+
+</div>
+
+{/* RATING */}
+
+<div className="mb-6">
+
+<p className="font-semibold mb-2">
+Review
+</p>
+
+{[5,4,3,2,1].map(r=>(
+<label key={r} className="block text-sm">
+
+<input
+type="checkbox"
+onChange={()=>setFilters({...filters,rating:r})}
+/>
+
+<span className="ml-2">
+{r} Star
+</span>
+
+</label>
+))}
+
+</div>
+
+{/* STOCK */}
+
+<div>
+
+<label>
+
+<input
+type="checkbox"
+onChange={(e)=>setFilters({
+...filters,
+in_stock:e.target.checked
+})}
+/>
+
+<span className="ml-2">
+In Stock
+</span>
+
+</label>
+
+</div>
+
+</div>
+
+)
+
 }
 
-export default FilterSidebar;
+export default FilterSidebar

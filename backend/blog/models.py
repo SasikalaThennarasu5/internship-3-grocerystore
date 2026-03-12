@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Blog(models.Model):
 
@@ -11,3 +12,13 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=100)
+    message = models.TextField()
+    rating = models.IntegerField(default=5)
+    image = models.ImageField(upload_to="testimonials/")
+
+    def __str__(self):
+        return self.name
