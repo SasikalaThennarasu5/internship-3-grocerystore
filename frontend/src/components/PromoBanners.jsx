@@ -14,7 +14,7 @@ const banners = [
   {
     title: "Purely fresh vegetables",
     desc: "Vegetables for the fresh on the healthy of delivery and ingreted",
-    img: "/images/banners/vegetables.png",
+    img: "/images/banners/vegetables.jpg",
     bg: "bg-orange-200",
   },
 ];
