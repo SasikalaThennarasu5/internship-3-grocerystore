@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 
 class RegisterView(generics.CreateAPIView):
@@ -60,3 +62,13 @@ class ChangePasswordView(APIView):
         update_session_auth_hash(request, user)
 
         return Response({"message": "Password updated successfully"})
+    
+def create_admin(request):
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            username="admin",
+            email="admin@gmail.com",
+            password="admin123"
+        )
+        return HttpResponse("Superuser created")
+    return HttpResponse("Admin already exists")
