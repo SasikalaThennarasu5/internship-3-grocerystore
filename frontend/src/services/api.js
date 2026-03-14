@@ -16,11 +16,13 @@ export const getCategories = async () => {
   return res.data;
 };
 
+// FEATURED
 export const getFeaturedProducts = async () => {
   const res = await api.get("/products/featured/");
   return res.data;
 };
 
+// BEST SELLERS
 export const getBestSellerProducts = async () => {
   const res = await api.get("/products/best-sellers/");
   return res.data;
