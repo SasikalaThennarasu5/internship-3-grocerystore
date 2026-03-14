@@ -110,7 +110,7 @@ frees for the goods for the shop for the goods to the food
 
 <div className="bg-purple-200 p-6 flex items-center">
 <img
-src="/images/products/fab-liquid.png"
+src="/images/banners/fab-liquid.png"
 className="w-40 object-contain"
 />
 </div>
