@@ -40,19 +40,17 @@ setTotalPages(Math.ceil(res.data.count/12))
 }
 
 const fetchFilters = async () => {
+  try {
 
-try{
+    const catRes = await api.get("/products/categories/")
+    const brandRes = await api.get("/products/brands/")
 
-const catRes = await api.get("categories/")
-const brandRes = await api.get("brands/")
+    setCategories(catRes.data.results || catRes.data)
+    setBrands(brandRes.data.results || brandRes.data)
 
-setCategories(catRes.data.results || catRes.data)
-setBrands(brandRes.data.results || brandRes.data)
-
-}catch(error){
-console.error(error)
-}
-
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 return(
