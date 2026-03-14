@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://internship-3-grocerystore-2.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 // ADD ACCESS TOKEN TO REQUEST
@@ -27,7 +27,6 @@ api.interceptors.response.use(
 
     const originalRequest = error.config;
 
-    // if access token expired
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
 
       originalRequest._retry = true;
@@ -37,7 +36,7 @@ api.interceptors.response.use(
         const refresh = localStorage.getItem("refresh");
 
         const res = await axios.post(
-          "https://internship-3-grocerystore-2.onrender.com/api/token/refresh/",
+          `${import.meta.env.VITE_API_URL}/token/refresh/`,
           { refresh }
         );
 
@@ -51,7 +50,6 @@ api.interceptors.response.use(
 
       } catch (err) {
 
-        // refresh token also expired → logout
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
 
