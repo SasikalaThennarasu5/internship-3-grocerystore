@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import { useNavigate, Link } from "react-router-dom";
 
 function RegisterPage() {
@@ -30,7 +30,7 @@ function RegisterPage() {
     }
 
     try {
-      await axios.post("http://127.0.0.1:8000/api/auth/register/", {
+      await api.post("account/register/", {
         username: form.name,
         email: form.email,
         phone: form.phone,

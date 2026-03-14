@@ -13,7 +13,7 @@ const BestSellerProducts = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    getBestSellerProducts().then(res => setProducts(res.data));
+    getBestSellerProducts().then((data) => setProducts(data));
   }, []);
 
   return (
@@ -42,7 +42,7 @@ const BestSellerProducts = () => {
         >
 
           {products.map(product => (
-            <SwiperSlide key={product._id}>
+            <SwiperSlide key={product.id}>
               <ProductCard product={product} />
             </SwiperSlide>
           ))}

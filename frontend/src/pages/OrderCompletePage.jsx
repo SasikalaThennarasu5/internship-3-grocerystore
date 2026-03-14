@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api/axios";
+import { Link } from "react-router-dom";
 
 function OrderCompletePage() {
 
@@ -43,6 +44,13 @@ function OrderCompletePage() {
         <p className="text-gray-500 mt-2">
           Thank You. Your Order has been completed
         </p>
+      
+        <Link
+to={`/track-order?orderId=${order.id}`}
+className="inline-block mt-6 bg-green-600 text-white px-6 py-3 rounded-full"
+>
+Track Your Order
+</Link>
 
       </div>
 
@@ -108,7 +116,7 @@ function OrderCompletePage() {
               <div className="flex items-center gap-4">
 
                 <img
-                  src={item.product_image}
+                  src={`http://127.0.0.1:8000${item.product_image}`}
                   alt=""
                   className="w-14 h-14 rounded border object-cover"
                 />

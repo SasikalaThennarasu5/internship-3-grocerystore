@@ -30,7 +30,7 @@ const WeeklyDeals = () => {
 
           <img
             src="/images/banners/basket.png"
-            className="w-64 object-contain"
+            className="w-100 object-contain"
           />
 
         </div>

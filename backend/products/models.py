@@ -20,9 +20,10 @@ class Brand(models.Model):
 class Product(models.Model):
 
     name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand,on_delete=models.CASCADE,null=True,blank=True)
-
+    description = models.TextField(blank=True)  # ✅ ADD THIS
     price = models.DecimalField(max_digits=10,decimal_places=2)
     discount_price = models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
 
@@ -30,11 +31,17 @@ class Product(models.Model):
 
     stock = models.IntegerField(default=0)
     is_available = models.BooleanField(default=True)   # ✅ ADD THIS
-    image = models.ImageField(upload_to="products", blank=True, null=True)
+    image = models.ImageField(upload_to="products/", blank=True, null=True)
 
     weight = models.CharField(max_length=50,blank=True, null=True)
-
+    is_featured = models.BooleanField(default=False)  # ✅ ADD
+    is_best_seller = models.BooleanField(default=False)  # ✅ ADD
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):   # ✅ ADD THIS METHOD
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

@@ -12,16 +12,18 @@ export const getProducts = async () => {
 
 // CATEGORIES
 export const getCategories = async () => {
-  const res = await api.get("/categories");
+  const res = await api.get("/products/categories/");
   return res.data;
 };
 
 export const getFeaturedProducts = async () => {
-  const res = await api.get("/product/featured");
+  const res = await api.get("/products/featured");
   return res.data;
 };
 
 export const getBestSellerProducts = async () => {
-  const res = await api.get("/product/best-sellers");
+  const res = await api.get("/products/best-sellers");
   return res.data;
 };
+
+export default api;

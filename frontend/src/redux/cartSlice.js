@@ -13,7 +13,7 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
 
       const item = state.items.find(
-        p => p._id === action.payload._id
+        p => p.id === action.payload.id
       );
 
       if (item) {
@@ -26,7 +26,7 @@ const cartSlice = createSlice({
 
     removeFromCart: (state, action) => {
       state.items = state.items.filter(
-        p => p._id !== action.payload
+        p => p.id !== action.payload
       );
     }
 

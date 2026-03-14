@@ -12,6 +12,7 @@ import OrderCompletePage from "../pages/OrderCompletePage";
 import Footer from "../components/Footer";
 import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
+
 /* Account pages */
 import AccountLayout from "../pages/account/AccountLayout";
 import PersonalInfo from "../pages/account/PersonalInfo";
@@ -24,6 +25,8 @@ import FaqPage from "../pages/FaqPage";
 import WishlistPage from "../pages/WishlistPage";
 import TrackOrderPage from "../pages/TrackOrderPage";
 import OrderStatusPage from "../pages/OrderStatusPage";
+import PaymentPage from "../pages/PaymentPage";
+import CategoryProducts from "../pages/CategoryProducts";
 
 function AppRouter() {
   return (
@@ -47,9 +50,11 @@ function AppRouter() {
         <Route path="/order-status/:id" element={<OrderStatusPage />} />
         <Route path="/order-complete/:id" element={<OrderCompletePage />} />
         <Route path="/shop" element={<ShopPage />} />
-        <Route path="/category/:category" element={<CategoryPage />} />
+        <Route path="/category/:id" element={<CategoryPage />} />
+        <Route path="/category/:id" element={<CategoryPage />} />
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/payment" element={<PaymentPage/>}/>
 
         {/* Account pages */}
         <Route path="/account" element={<AccountLayout />}>

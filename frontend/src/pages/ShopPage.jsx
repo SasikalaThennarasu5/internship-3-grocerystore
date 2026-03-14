@@ -46,8 +46,8 @@ try{
 const catRes = await api.get("categories/")
 const brandRes = await api.get("brands/")
 
-setCategories(catRes.data.results)
-setBrands(brandRes.data.results)
+setCategories(catRes.data.results || catRes.data)
+setBrands(brandRes.data.results || brandRes.data)
 
 }catch(error){
 console.error(error)

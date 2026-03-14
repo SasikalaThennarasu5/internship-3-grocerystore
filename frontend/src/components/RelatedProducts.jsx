@@ -9,7 +9,7 @@ const [products,setProducts] = useState([]);
 useEffect(()=>{
 
 api.get(`products/?category=${category}`)
-.then(res=>setProducts(res.data));
+.then(res=>setProducts(res.data.results));
 
 },[category]);
 

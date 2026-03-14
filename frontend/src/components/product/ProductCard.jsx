@@ -7,7 +7,11 @@ import { useWishlist } from "../../context/WishlistContext";
 function ProductCard({ product }) {
 
   const dispatch = useDispatch();
-  const { toggleWishlist } = useWishlist();
+  const { toggleWishlist, wishlist } = useWishlist();
+
+const inWishlist = wishlist.find(
+  item => item.product === product.id
+);
 
   return (
     <div className="bg-white rounded-lg shadow-sm border p-3 relative">
@@ -25,12 +29,17 @@ function ProductCard({ product }) {
           toggleWishlist(product);
         }}
       >
-        <Heart size={18} />
+        <Heart
+  size={18}
+  className={`cursor-pointer transition ${
+    inWishlist ? "text-red-500" : "text-gray-400 hover:text-red-500"
+  }`}
+/>
       </button>
 
       {/* Product Image */}
       <img
-        src={product.image}
+        src={product.images?.[0]?.image}
         alt={product.name}
         className="h-40 w-full object-contain"
       />

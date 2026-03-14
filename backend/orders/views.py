@@ -5,6 +5,12 @@ from rest_framework.response import Response
 from .serializers import ShippingAddressSerializer, OrderSerializer
 from cart.models import Cart
 from .models import Order, OrderItem, ShippingAddress
+from products.models import Product
+import razorpay
+from django.conf import settings
+from rest_framework.decorators import api_view
+import hmac
+import hashlib
 
 class CreateOrderView(APIView):
 
@@ -14,62 +20,61 @@ class CreateOrderView(APIView):
 
         address_id = request.data.get("address_id")
         payment_method = request.data.get("payment_method")
+        items = request.data.get("items", [])
 
-        # Validate address_id
         if not address_id:
             return Response({"error": "Address ID is required"}, status=400)
 
-        # Get user's cart
-        try:
-            cart = Cart.objects.get(user=request.user)
-        except Cart.DoesNotExist:
-            return Response({"error": "Cart not found"}, status=404)
+        if not items:
+            return Response({"error": "Cart is empty"}, status=400)
 
-        # Get shipping address
         try:
             shipping_address = ShippingAddress.objects.get(
                 id=int(address_id),
                 user=request.user
             )
-        except (ShippingAddress.DoesNotExist, ValueError):
+        except ShippingAddress.DoesNotExist:
             return Response({"error": "Invalid address"}, status=404)
-        
-        # Check if cart is empty
-        if not cart.items.exists():
-            return Response({"error": "Cart is empty"}, status=400)
 
-        # Calculate total
         total_price = 0
-        for item in cart.items.all():
-            total_price += item.product.price * item.quantity
 
-        # Create order
         order = Order.objects.create(
             user=request.user,
             shipping_address=shipping_address,
             payment_method=payment_method,
-            total_price=total_price
+            total_price=0
         )
 
-        # Create order items
-        for item in cart.items.all():
+        for item in items:
+
+            product_id = item.get("id")
+            quantity = item.get("quantity")
+
+            try:
+                product = Product.objects.get(id=product_id)
+            except Product.DoesNotExist:
+                continue
+
+            price = product.price
+            total_price += price * quantity
+
             OrderItem.objects.create(
                 order=order,
-                product=item.product,
-                quantity=item.quantity,
-                price=item.product.price
+                product=product,
+                quantity=quantity,
+                price=price
             )
 
-        # Clear cart
-        cart.items.all().delete()
+        order.total_price = total_price
+        order.save()
 
         return Response({
-    "message": "Order created successfully",
-    "order_id": order.id,
-    "total_price": order.total_price,
-    "payment_method": order.payment_method,
-    "status": order.status
-})
+            "message": "Order created successfully",
+            "order_id": order.id,
+            "total_price": order.total_price,
+            "payment_method": order.payment_method,
+            "status": order.status
+        })
     
 
 
@@ -144,3 +149,44 @@ class DeleteAddressView(DestroyAPIView):
 
     def get_queryset(self):
         return ShippingAddress.objects.filter(user=self.request.user)
+    
+client = razorpay.Client(auth=(
+    settings.RAZORPAY_KEY_ID,
+    settings.RAZORPAY_SECRET_KEY
+))
+
+@api_view(['POST'])
+def create_razorpay_order(request):
+
+    amount = request.data.get("amount")
+
+    order = client.order.create({
+        "amount": int(amount) * 100,
+        "currency": "INR",
+        "payment_capture": 1
+    })
+
+    return Response(order)
+
+@api_view(['POST'])
+def verify_payment(request):
+
+    razorpay_order_id = request.data.get("razorpay_order_id")
+    razorpay_payment_id = request.data.get("razorpay_payment_id")
+    razorpay_signature = request.data.get("razorpay_signature")
+
+    generated_signature = hmac.new(
+        bytes(settings.RAZORPAY_SECRET_KEY, 'utf-8'),
+        bytes(razorpay_order_id + "|" + razorpay_payment_id, 'utf-8'),
+        hashlib.sha256
+    ).hexdigest()
+
+    if generated_signature == razorpay_signature:
+
+        order = Order.objects.get(id=request.data.get("order_id"))
+        order.status = "paid"
+        order.save()
+
+        return Response({"message":"Payment verified"})
+
+    return Response({"error":"Payment verification failed"}, status=400)

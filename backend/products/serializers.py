@@ -17,13 +17,20 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         request = self.context.get("request")
-        return request.build_absolute_uri(obj.image.url)
+        if request:
+            return request.build_absolute_uri(obj.image.url)
+        return obj.image.url
 
 class CategorySerializer(serializers.ModelSerializer):
 
+    product_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = ["id", "name", "image", "product_count"]
+
+    def get_product_count(self, obj):
+        return obj.product_set.count()
 
 class CategoryProductSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)
@@ -41,6 +48,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     category = CategorySerializer(read_only=True)
     brand = BrandSerializer(read_only=True)
+    images = ProductImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product

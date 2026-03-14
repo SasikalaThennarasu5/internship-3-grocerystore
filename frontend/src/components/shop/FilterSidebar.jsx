@@ -30,7 +30,7 @@ onChange={(e)=>{
 
 setFilters({
 ...filters,
-category:Number(e.target.value)
+category:category.id(e.target.value)
 })
 
 }}

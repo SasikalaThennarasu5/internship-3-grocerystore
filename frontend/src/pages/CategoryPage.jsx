@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductCard from "../components/product/ProductCard";
-import FilterSidebar from "../components/shop/FilterSidebar"
+import FilterSidebar from "../components/shop/FilterSidebar";
 
 function CategoryPage() {
 
@@ -11,9 +11,11 @@ function CategoryPage() {
 
   useEffect(() => {
 
-    fetch(`http://127.0.0.1:8000/api/products/categories/${id}/products/`)
+    fetch(`http://127.0.0.1:8000/api/categories/${id}/products/`)
       .then(res => res.json())
-      .then(data => setProducts(data));
+      .then(data => {
+        setProducts(data.results || data);
+      });
 
   }, [id]);
 

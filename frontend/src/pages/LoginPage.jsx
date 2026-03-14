@@ -1,15 +1,17 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState, useContext } from "react";
+import api from "../api/axios";
 import { useNavigate, Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function LoginPage() {
+  const { setUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    email: "",
-    password: ""
-  });
+  email: "",
+  password: ""
+});
 
   const handleChange = (e) => {
     setForm({
@@ -24,19 +26,23 @@ function LoginPage() {
 
     try {
 
-      const res = await axios.post(
-        "http://127.0.0.1:8000/api/auth/login/",
-        form
-      );
+      const res = await api.post("auth/login/", {
+  email: form.email,
+  password: form.password
+});
 
-      localStorage.setItem("access", res.data.access);
-      localStorage.setItem("refresh", res.data.refresh);
+localStorage.setItem("access", res.data.access);
+localStorage.setItem("refresh", res.data.refresh);
 
-      navigate("/");
+const userRes = await api.get("account/profile/");
+setUser(userRes.data);
+
+navigate("/");
 
     } catch (error) {
-      alert("Login failed");
-    }
+  console.log(error.response?.data);
+  alert("Login failed");
+}
 
   };
 
@@ -53,19 +59,21 @@ function LoginPage() {
           <form onSubmit={handleSubmit} className="w-full space-y-4">
 
             <input
-              name="email"
-              placeholder="Email"
-              className="w-full p-2 rounded text-black"
-              onChange={handleChange}
-            />
+  name="email"
+  placeholder="Email"
+  required
+  className="w-full p-2 rounded text-black"
+  onChange={handleChange}
+/>
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              className="w-full p-2 rounded text-black"
-              onChange={handleChange}
-            />
+<input
+  type="password"
+  name="password"
+  required
+  placeholder="Password"
+  className="w-full p-2 rounded text-black"
+  onChange={handleChange}
+/>
 
             <button className="bg-yellow-400 text-black w-full py-2 rounded font-semibold">
               LOG IN

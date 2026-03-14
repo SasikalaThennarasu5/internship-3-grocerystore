@@ -1,36 +1,86 @@
 import { useState } from "react";
-import axios from "axios";
+import { changePassword } from "../../services/accountService";
 
 function PasswordManager() {
 
-  const [data, setData] = useState({
+  const [form, setForm] = useState({
     old_password: "",
-    new_password: ""
+    new_password: "",
+    confirm_password: ""
   });
 
-  const changePassword = () => {
-    axios.post("/api/account/change-password/", data)
-      .then(() => alert("Password changed"));
+  const handleChange = (e) => {
+
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+
+  };
+
+  const handleSubmit = async () => {
+
+    if (form.new_password !== form.confirm_password) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+
+      await changePassword({
+        old_password: form.old_password,
+        new_password: form.new_password
+      });
+
+      alert("Password updated successfully");
+
+      setForm({
+        old_password: "",
+        new_password: "",
+        confirm_password: ""
+      });
+
+    } catch (error) {
+
+      console.error(error);
+      alert("Failed to change password");
+
+    }
+
   };
 
   return (
-    <div>
+    <div className="password-manager">
 
       <h2>Password Manager</h2>
 
       <input
         type="password"
+        name="old_password"
         placeholder="Old Password"
-        onChange={(e) => setData({...data, old_password: e.target.value})}
+        value={form.old_password}
+        onChange={handleChange}
       />
 
       <input
         type="password"
+        name="new_password"
         placeholder="New Password"
-        onChange={(e) => setData({...data, new_password: e.target.value})}
+        value={form.new_password}
+        onChange={handleChange}
       />
 
-      <button onClick={changePassword}>Update Password</button>
+      <input
+        type="password"
+        name="confirm_password"
+        placeholder="Confirm New Password"
+        value={form.confirm_password}
+        onChange={handleChange}
+      />
+
+      <button onClick={handleSubmit}>
+        Update Password
+      </button>
 
     </div>
   );

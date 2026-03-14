@@ -1,137 +1,213 @@
 import useCountdown from "../hooks/useCountdown";
+import { Link } from "react-router-dom";
 
 const DealsOfDay = () => {
 
-  const { days, hours, minutes, seconds } =
-    useCountdown("2026-04-01");
+const { days, hours, minutes, seconds } =
+useCountdown("2026-04-01");
 
-  return (
-    <section className="py-12 bg-gray-100">
+return (
 
-      <div className="max-w-7xl mx-auto px-4">
+<section className="py-16 bg-gray-100">
 
-        <p className="text-sm text-gray-500">Today Deals</p>
+<div className="max-w-7xl mx-auto px-4">
 
-        <h2 className="text-3xl font-bold mb-8">
-          Deals Of <span className="text-red-500">the Day</span>
-        </h2>
+{/* TOP BANNERS */}
+<div className="grid md:grid-cols-3 gap-6 mb-14">
 
-        <div className="grid md:grid-cols-3 gap-6">
+{/* Left Banner */}
+<div className="relative rounded-xl overflow-hidden">
+<img
+src="/images/banners/banner-left.png"
+className="w-full h-[300px] object-cover"
+/>
+<div className="absolute inset-6 border border-white"></div>
+</div>
 
-          {/* Deal Card 1 */}
-          <div className="bg-purple-100 p-6 rounded-lg flex gap-4">
 
-            <img
-              src="/images/products/fab-liquid.png"
-              alt="Fab Liquid"
-              className="w-32 object-contain"
-            />
+{/* CENTER COUNTDOWN BANNER */}
+<div className="bg-[#efe5d3] rounded-xl p-8 flex flex-col justify-center items-center text-center relative">
 
-            <div>
+<h3 className="text-2xl font-bold mb-2">
+Summer Discount
+</h3>
 
-              <span className="bg-gray-700 text-white text-xs px-2 py-1 rounded">
-                25% OFF
-              </span>
+<p className="text-gray-600">
+Get 50% Off - Limited Time Offer
+</p>
 
-              <p className="text-sm text-gray-500 mt-2">
-                Laundry supplies
-              </p>
+{/* COUNTDOWN */}
+<div className="flex gap-6 mt-6 text-center">
 
-              <h3 className="font-bold text-lg">
-                Goorej fab liquid
-              </h3>
+<div>
+<p className="text-2xl font-bold">{days}</p>
+<span className="text-sm text-gray-500">Days</span>
+</div>
 
-              <p className="text-xl font-bold">₹400</p>
+<div>
+<p className="text-2xl font-bold">{hours}</p>
+<span className="text-sm text-gray-500">Hours</span>
+</div>
 
-              <button className="mt-3 bg-green-600 text-white px-4 py-1 rounded">
-                ADD
-              </button>
+<div>
+<p className="text-2xl font-bold">{minutes}</p>
+<span className="text-sm text-gray-500">Minutes</span>
+</div>
 
-            </div>
+<div>
+<p className="text-2xl font-bold">{seconds}</p>
+<span className="text-sm text-gray-500">Seconds</span>
+</div>
 
-          </div>
+</div>
 
-          {/* Deal Card 2 */}
-          <div className="bg-purple-100 p-6 rounded-lg flex gap-4">
+<Link
+to="/shop"
+className="mt-6 bg-green-700 text-white px-6 py-3 rounded-full font-semibold"
+>
+Shop Now
+</Link>
 
-            <img
-              src="/images/products/handwash.png"
-              alt="Handwash"
-              className="w-32 object-contain"
-            />
+</div>
 
-            <div>
 
-              <span className="bg-gray-700 text-white text-xs px-2 py-1 rounded">
-                25% OFF
-              </span>
+{/* Right Banner */}
+<div className="relative rounded-xl overflow-hidden">
+<img
+src="/images/banners/banner-right.png"
+className="w-full h-[300px] object-cover"
+/>
+<div className="absolute inset-6 border border-white"></div>
+</div>
 
-              <p className="text-sm text-gray-500 mt-2">
-                Personal care
-              </p>
+</div>
 
-              <h3 className="font-bold text-lg">
-                Aloe Neem Hand wash
-              </h3>
 
-              <p className="text-xl font-bold">₹300</p>
+{/* DEALS HEADER */}
+<div className="flex justify-between items-end mb-8">
 
-              <button className="mt-3 bg-green-600 text-white px-4 py-1 rounded">
-                ADD
-              </button>
+<div>
+<p className="text-gray-500">Today Deals</p>
 
-            </div>
+<h2 className="text-3xl font-bold">
+Deals Of <span className="text-red-500">the Day</span>
+</h2>
+</div>
 
-          </div>
+<p className="text-gray-500 text-sm max-w-md">
+Set of the under for the error the inside for the gold price
+frees for the goods for the shop for the goods to the food
+</p>
 
-          {/* Summer Banner */}
-          <div className="bg-green-100 rounded-lg p-6 flex flex-col justify-center">
+</div>
 
-            <h3 className="text-2xl font-bold">
-              Summer Discount
-            </h3>
 
-            <p className="text-gray-600 mt-2">
-              Get 50% Off - Limited Time Offer
-            </p>
+{/* PRODUCT DEALS */}
+<div className="grid md:grid-cols-2 gap-6">
 
-            {/* Countdown Timer */}
-            <div className="flex gap-6 mt-6 text-center">
+{/* PRODUCT 1 */}
+<div className="bg-white rounded-xl shadow flex overflow-hidden">
 
-              <div>
-                <p className="text-xl font-bold">{days}</p>
-                <span className="text-sm text-gray-500">Days</span>
-              </div>
+<div className="bg-purple-200 p-6 flex items-center">
+<img
+src="/images/products/fab-liquid.png"
+className="w-40 object-contain"
+/>
+</div>
 
-              <div>
-                <p className="text-xl font-bold">{hours}</p>
-                <span className="text-sm text-gray-500">Hours</span>
-              </div>
+<div className="p-6 flex flex-col justify-between">
 
-              <div>
-                <p className="text-xl font-bold">{minutes}</p>
-                <span className="text-sm text-gray-500">Minutes</span>
-              </div>
+<div>
 
-              <div>
-                <p className="text-xl font-bold">{seconds}</p>
-                <span className="text-sm text-gray-500">Seconds</span>
-              </div>
+<span className="bg-gray-800 text-white text-xs px-2 py-1 rounded">
+25% OFF
+</span>
 
-            </div>
+<p className="text-sm text-gray-500 mt-2">
+Laundry supplies
+</p>
 
-            <button className="mt-6 bg-green-600 text-white px-6 py-2 rounded-full">
-              Shop Now
-            </button>
+<h3 className="text-lg font-bold">
+Goorej fab liquid
+</h3>
 
-          </div>
+<p className="mt-2 text-xl font-bold">
+₹400
+<span className="text-gray-400 line-through text-sm ml-2">
+₹500
+</span>
+</p>
 
-        </div>
+<p className="text-sm text-yellow-500 mt-2">
+⭐⭐⭐⭐☆ 4.5
+</p>
 
-      </div>
+</div>
 
-    </section>
-  );
+<button className="bg-green-700 text-white px-5 py-2 rounded-full mt-4 w-fit">
+ADD
+</button>
+
+</div>
+
+</div>
+
+
+{/* PRODUCT 2 */}
+<div className="bg-white rounded-xl shadow flex overflow-hidden">
+
+<div className="bg-purple-200 p-6 flex items-center">
+<img
+src="/images/products/handwash.png"
+className="w-40 object-contain"
+/>
+</div>
+
+<div className="p-6 flex flex-col justify-between">
+
+<div>
+
+<span className="bg-gray-800 text-white text-xs px-2 py-1 rounded">
+25% OFF
+</span>
+
+<p className="text-sm text-gray-500 mt-2">
+Personal care
+</p>
+
+<h3 className="text-lg font-bold">
+Aloe Neem Hand wash
+</h3>
+
+<p className="mt-2 text-xl font-bold">
+₹300
+<span className="text-gray-400 line-through text-sm ml-2">
+₹400
+</span>
+</p>
+
+<p className="text-sm text-yellow-500 mt-2">
+⭐⭐⭐⭐☆ 4.5
+</p>
+
+</div>
+
+<button className="bg-green-700 text-white px-5 py-2 rounded-full mt-4 w-fit">
+ADD
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+);
+
 };
 
 export default DealsOfDay;

@@ -4,9 +4,25 @@ from .models import Order, OrderItem, ShippingAddress
 
 class OrderItemSerializer(serializers.ModelSerializer):
 
+    product_name = serializers.CharField(source="product.name")
+    product_image = serializers.SerializerMethodField()
+
     class Meta:
         model = OrderItem
-        fields = "__all__"
+        fields = [
+            "id",
+            "product",
+            "product_name",
+            "product_image",
+            "quantity",
+            "price"
+        ]
+
+    def get_product_image(self, obj):
+        image = obj.product.images.first()
+        if image:
+            return image.image.url
+        return None
 
 
 class OrderSerializer(serializers.ModelSerializer):
