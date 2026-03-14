@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: "https://internship-3-grocerystore-2.onrender.com/api",
 });
 
 // PRODUCTS
 export const getProducts = async () => {
-  const res = await api.get("/product");
+  const res = await api.get("/products/");
   return res.data;
 };
 
@@ -17,12 +17,12 @@ export const getCategories = async () => {
 };
 
 export const getFeaturedProducts = async () => {
-  const res = await api.get("/products/featured");
+  const res = await api.get("/products/featured/");
   return res.data;
 };
 
 export const getBestSellerProducts = async () => {
-  const res = await api.get("/products/best-sellers");
+  const res = await api.get("/products/best-sellers/");
   return res.data;
 };
 
