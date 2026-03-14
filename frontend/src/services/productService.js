@@ -1,9 +1,6 @@
-import axios from "axios";
+import api from "../api/axios";
 
 export const getProducts = async () => {
-
-  const res = await axios.get("/api/products/");
-
+  const res = await api.get("/products/");
   return res.data.results;
-
 };
