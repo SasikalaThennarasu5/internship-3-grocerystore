@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://internship-3-grocerystore-2.onrender.com/api/",
+  baseURL: "https://internship-3-grocerystore-2.onrender.com/api",
 });
 
 // ADD ACCESS TOKEN TO REQUEST
@@ -28,7 +28,7 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     // if access token expired
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
 
       originalRequest._retry = true;
 
