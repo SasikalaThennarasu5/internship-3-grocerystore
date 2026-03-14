@@ -11,11 +11,11 @@ function CategoryPage() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-  api.get(`/categories/${id}/products/`)
+  api.get(`/products/categories/${id}/products/`)
     .then(res => {
       setProducts(res.data.results || res.data);
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log("Category fetch error:", err));
 }, [id]);
 
   return (
