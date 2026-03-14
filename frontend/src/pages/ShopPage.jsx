@@ -27,7 +27,7 @@ fetchFilters()
 
 const fetchProducts = async()=>{
 
-const res = await api.get("products/",{
+const res = await api.get("/products/",{
 params:{
 ...filters,
 page:page
