@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://internship-3-grocerystore-2.onrender.com/api";
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_URL,
 });
 
 // ADD ACCESS TOKEN TO REQUEST
