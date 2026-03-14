@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductCard from "../components/product/ProductCard";
 import FilterSidebar from "../components/shop/FilterSidebar";
+import api from "../api/axios";
 
 function CategoryPage() {
 
@@ -10,14 +11,12 @@ function CategoryPage() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-
-    fetch(`http://127.0.0.1:8000/api/categories/${id}/products/`)
-      .then(res => res.json())
-      .then(data => {
-        setProducts(data.results || data);
-      });
-
-  }, [id]);
+  api.get(`/categories/${id}/products/`)
+    .then(res => {
+      setProducts(res.data.results || res.data);
+    })
+    .catch(err => console.log(err));
+}, [id]);
 
   return (
     <div className="max-w-7xl mx-auto grid grid-cols-4 gap-6 mt-6">

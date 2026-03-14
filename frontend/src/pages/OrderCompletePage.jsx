@@ -116,7 +116,7 @@ Track Your Order
               <div className="flex items-center gap-4">
 
                 <img
-                  src={`http://127.0.0.1:8000${item.product_image}`}
+                  src={`https://internship-3-grocerystore-2.onrender.com${item.product_image}`}
                   alt=""
                   className="w-14 h-14 rounded border object-cover"
                 />

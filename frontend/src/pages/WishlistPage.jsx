@@ -58,7 +58,7 @@ const addToCartHandler = async (item) => {
       id: item.product,
       name: item.product_name,
       price: item.price,
-      image: `http://127.0.0.1:8000${item.product_image}`,
+      image: `https://internship-3-grocerystore-2.onrender.com${item.product_image}`,
       quantity: 1
     }));
 
@@ -128,7 +128,7 @@ return (
               </button>
 
               <img
-                src={`http://127.0.0.1:8000${item.product_image}`}
+                src={`https://internship-3-grocerystore-2.onrender.com${item.product_image}`}
                 alt={item.product_name}
                 className="w-14 h-14 object-cover rounded border"
               />
