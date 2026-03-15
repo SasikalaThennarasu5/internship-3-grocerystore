@@ -39,10 +39,11 @@ const inWishlist = wishlist.find(
 
       {/* Product Image */}
       <img
-        src={product.images?.[0]?.image}
-        alt={product.name}
-        className="h-40 w-full object-contain"
-      />
+  src={`/allproducts/${product.slug}.jpg`}
+  alt={product.name}
+  className="h-40 w-full object-contain"
+  onError={(e)=>{e.target.src="/allproducts/default.jpg"}}
+/>
 
       {/* Category */}
       <p className="text-xs text-gray-400 mt-2">
