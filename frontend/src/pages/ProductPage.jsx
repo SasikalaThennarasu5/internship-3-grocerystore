@@ -26,7 +26,7 @@ api.get(`products/${id}/`)
 .then(res=>{
 setProduct(res.data)
 
-setActiveImage(`/allproducts/${res.data.slug}.jpg`)
+setActiveImage(`/products/${res.data.slug}.jpg`)
 
 })
 .catch(err=>console.log(err))
@@ -86,7 +86,7 @@ return (
 
 <img
 src={activeImage}
-onError={(e)=>{e.target.src="/allproducts/default.jpg"}}
+onError={(e)=>{e.target.src="/products/default.jpg"}}
 alt={product.name}
 className="w-full rounded-lg bg-gray-100"
 />
@@ -99,7 +99,7 @@ className="w-full rounded-lg bg-gray-100"
 {["1","2","3"].map((i)=>(
 <img
 key={i}
-src={`/allproducts/${product.slug}.jpg`}
+src={`/products/${product.slug}.jpg`}
 onClick={()=>setActiveImage(`/products/${product.slug}.jpg`)}
 className="w-16 h-16 object-cover border rounded cursor-pointer"
 alt=""
