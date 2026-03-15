@@ -26,9 +26,7 @@ api.get(`products/${id}/`)
 .then(res=>{
 setProduct(res.data)
 
-if(res.data.images?.length){
-setActiveImage(res.data.images[0].image)
-}
+setActiveImage(`/allproducts/${res.data.slug}.jpg`)
 
 })
 .catch(err=>console.log(err))
@@ -88,6 +86,7 @@ return (
 
 <img
 src={activeImage}
+onError={(e)=>{e.target.src="/allproducts/default.jpg"}}
 alt={product.name}
 className="w-full rounded-lg bg-gray-100"
 />
@@ -97,17 +96,14 @@ className="w-full rounded-lg bg-gray-100"
 
 <div className="flex gap-3 mt-4">
 
-{product.images?.map((img,i)=>(
-
+{["1","2","3"].map((i)=>(
 <img
 key={i}
-src={img.image}
-onClick={()=>setActiveImage(img.image)}
-className={`w-16 h-16 object-cover border rounded cursor-pointer
-${activeImage===img.image ? "border-green-600" : ""}`}
+src={`/allproducts/${product.slug}.jpg`}
+onClick={()=>setActiveImage(`/products/${product.slug}.jpg`)}
+className="w-16 h-16 object-cover border rounded cursor-pointer"
 alt=""
 />
-
 ))}
 
 </div>
