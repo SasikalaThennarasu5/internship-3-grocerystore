@@ -116,8 +116,11 @@ className="flex items-center justify-between px-6 py-5 border-b"
 <div className="flex items-center gap-4">
 
 <img
-src={item.product_image || "/placeholder.png"}
+src={`/images/products/${item.slug}.jpg`}
 className="w-12 h-12 rounded"
+onError={(e)=>{
+  e.target.src="/images/products/default.jpg"
+}}
 />
 
 <div>

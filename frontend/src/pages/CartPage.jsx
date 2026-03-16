@@ -75,7 +75,7 @@ function CartPage() {
                   </button>
 
                   <img
-                    src={item.image}
+                    src={item.image || `/images/products/${item.slug}.jpg`}
                     alt={item.name}
                     className="w-14 h-14 object-cover"
                   />

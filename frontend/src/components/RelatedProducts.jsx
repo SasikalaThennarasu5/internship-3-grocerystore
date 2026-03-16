@@ -32,10 +32,12 @@ className="border p-3 rounded"
 >
 
 <img
-src={p.image}
+src={`/images/products/${p.slug}.jpg`}
 className="h-32 mx-auto"
+onError={(e)=>{
+  e.target.src="/images/products/default.jpg"
+}}
 />
-
 <p className="text-sm mt-2">
 {p.name}
 </p>
