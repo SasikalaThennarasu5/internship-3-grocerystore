@@ -99,8 +99,8 @@ className="w-full rounded-lg bg-gray-100"
 {["1","2","3"].map((i)=>(
 <img
 key={i}
-src={`/products/${product.slug}.jpg`}
-onClick={()=>setActiveImage(`/products/${product.slug}.jpg`)}
+src={`/images/products/${product.slug}.jpg`}
+onClick={()=>setActiveImage(`/images/products/${product.slug}.jpg`)}
 className="w-16 h-16 object-cover border rounded cursor-pointer"
 alt=""
 />
