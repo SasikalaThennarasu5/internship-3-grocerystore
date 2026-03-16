@@ -128,10 +128,11 @@ return (
               </button>
 
               <img
-                src={`/images/products/${item.slug}.jpg`}
-                alt={item.product_name}
-                className="w-14 h-14 object-cover rounded border"
-              />
+  src={`/images/products/${item.product_slug}.jpg`}
+  alt={item.product_name}
+  className="w-14 h-14 object-cover rounded border"
+  onError={(e)=>{e.target.src="/images/products/default.jpg"}}
+/>
 
               <div>
 
