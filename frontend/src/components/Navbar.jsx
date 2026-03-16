@@ -169,11 +169,11 @@ function Navbar() {
 
             <Link to="/shop">Shop</Link>
 
-            <Link to="/category/3">Fruits</Link>
+            <Link to="/category/2">Fruits</Link>
 
-            <Link to="/category/2">Vegetables</Link>
+            <Link to="/category/1">Vegetables</Link>
 
-            <Link to="/category/4">Beverages</Link>
+            <Link to="/category/5">Beverages</Link>
 
             <Link to="/about">About us</Link>
 
