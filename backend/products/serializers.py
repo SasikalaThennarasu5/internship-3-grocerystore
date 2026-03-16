@@ -41,7 +41,6 @@ class CategoryProductSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "price",
-            "image",
             "images"
         ]
 
