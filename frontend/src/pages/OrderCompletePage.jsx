@@ -116,10 +116,11 @@ Track Your Order
               <div className="flex items-center gap-4">
 
                 <img
-                  src={`/images/products/${item.slug}.jpg`}
-                  alt=""
-                  className="w-14 h-14 rounded border object-cover"
-                />
+  src={`/images/products/${item.product_slug}.jpg`}
+  alt={item.product_name}
+  className="w-14 h-14 rounded border object-cover"
+  onError={(e)=>{e.target.src="/images/products/default.jpg"}}
+/>
 
                 <div>
 

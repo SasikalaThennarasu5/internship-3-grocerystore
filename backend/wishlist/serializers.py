@@ -6,7 +6,7 @@ class WishlistSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source="product.name")
     price = serializers.DecimalField(source="product.price", max_digits=10, decimal_places=2)
     product_image = serializers.SerializerMethodField()
-
+    product_slug = serializers.CharField(source="product.slug")
     class Meta:
         model = Wishlist
         fields = [
@@ -14,6 +14,7 @@ class WishlistSerializer(serializers.ModelSerializer):
             "product",
             "product_name",
             "product_image",
+            "product_slug",
             "price",
             "created_at"
         ]

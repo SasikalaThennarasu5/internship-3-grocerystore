@@ -6,7 +6,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     product_name = serializers.CharField(source="product.name")
     product_image = serializers.SerializerMethodField()
-
+    product_slug = serializers.CharField(source="product.slug")
     class Meta:
         model = OrderItem
         fields = [
@@ -14,6 +14,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "product",
             "product_name",
             "product_image",
+            "product_slug",
             "quantity",
             "price"
         ]
