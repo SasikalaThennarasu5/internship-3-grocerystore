@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 function CategoryCard({ category }) {
 
 const categoryImages = {
-  vegetables: "/images/categories/vegetables.jpg",
-  fruits: "/images/categories/fruits.jpg",
-  drinks: "/images/categories/drinks.jpg",
-  dairy: "/images/categories/dairy.jpg",
-  bakery: "/images/categories/bakery.jpg",
-  "milk & eggs": "/images/categories/milk-and-eggs.jpg",
-  household: "/images/categories/household.jpg",
+  vegetables: "/images/categories/vegetables.png",
+  fruits: "/images/categories/fruits.png",
+  drinks: "/images/categories/drinks.png",
+  dairy: "/images/categories/dairy.png",
+  bakery: "/images/categories/bakery.png",
+  "milk & eggs": "/images/categories/milk-and-eggs.png",
+  household: "/images/categories/household.png",
 };
 
 return (
