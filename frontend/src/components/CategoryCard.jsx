@@ -36,7 +36,7 @@ e.target.src="/images/categories/default.png"
 </h3>
 
 <p className="text-sm text-green-600">
-{category.products_count} products
+{category.product_count} products
 </p>
 
 </div>
