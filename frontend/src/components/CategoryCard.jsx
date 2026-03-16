@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function CategoryCard({ category }) {
 
 const categoryImages = {
-  vegetables: "/images/categories/vegetables.png",
+  vegetables: "/images/categories/vegetable.png",
   fruits: "/images/categories/fruits.png",
   drinks: "/images/categories/drinks.png",
   dairy: "/images/categories/dairy.png",
