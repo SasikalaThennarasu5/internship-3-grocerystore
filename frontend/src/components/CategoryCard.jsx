@@ -21,11 +21,11 @@ return (
 <div className="w-32 h-32 rounded-full flex items-center justify-center bg-green-100 group-hover:bg-green-200 transition duration-300 shadow-md">
 
 <img
-src={categoryImages[category.name.toLowerCase()] || "/images/categories/default.jpg"}
+src={categoryImages[category.name.toLowerCase()] || "/images/categories/default.png"}
 alt={category.name}
 className="w-full h-28 object-contain"
 onError={(e)=>{
-e.target.src="/images/categories/default.jpg"
+e.target.src="/images/categories/default.png"
 }}
 />
 

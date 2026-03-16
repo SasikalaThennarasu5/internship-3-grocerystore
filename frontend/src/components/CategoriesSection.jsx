@@ -17,16 +17,12 @@ fetchCategories();
 },[]);
 
 const fetchCategories = async()=>{
-
 try{
-
 const data = await getCategories();
 setCategories(data.results);
-
 }catch(error){
 console.error("Category fetch error:",error);
 }
-
 };
 
 return(
@@ -52,7 +48,6 @@ autoplay={{
 delay:2500,
 disableOnInteraction:false
 }}
-
 breakpoints={{
 320:{slidesPerView:2},
 480:{slidesPerView:3},
